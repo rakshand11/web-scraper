@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import API from "../api/axios.js";
 
-export const Login = () => {
+const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -60,3 +60,5 @@ export const Login = () => {
     </div>
   );
 };
+
+export default Login;

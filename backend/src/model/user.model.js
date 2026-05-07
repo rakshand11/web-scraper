@@ -15,6 +15,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    bookmarks: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Story" }],
+      default: [],
+    },
   },
   { timestamps: true },
 );

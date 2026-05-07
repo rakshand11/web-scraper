@@ -37,35 +37,45 @@ export const getSingleStory = async (req, res) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
-
 export const toggleBookmark = async (req, res) => {
   try {
     const userId = req.user.id;
     const storyId = req.params.id;
 
+    console.log("User ID:", userId);
+    console.log("Story ID:", storyId);
+
     const story = await storyModel.findById(storyId);
+    console.log("Story found:", story);
+
     if (!story) {
       return res.status(404).json({ message: "Story not found" });
     }
 
     const user = await userModel.findById(userId);
+    console.log("User found:", user);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     const isBookmarked = user.bookmarks.includes(storyId);
 
     if (isBookmarked) {
       user.bookmarks = user.bookmarks.filter((id) => id.toString() !== storyId);
-      await user.save();
-      return res
-        .status(200)
-        .json({ message: "Bookmark removed", bookmarked: false });
     } else {
       user.bookmarks.push(storyId);
-      await user.save();
-      return res
-        .status(200)
-        .json({ message: "Bookmark added", bookmarked: true });
     }
+
+    await user.save();
+
+    return res.status(200).json({
+      message: isBookmarked ? "Bookmark removed" : "Bookmark added",
+      bookmarked: !isBookmarked,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.log("Bookmark error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 

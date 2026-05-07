@@ -28,8 +28,12 @@ const scrapeHackerNews = async () => {
         }
       });
 
-    await storyModel.deleteMany({});
-    await storyModel.insertMany(stories);
+    for (const story of stories) {
+      await storyModel.findOneAndUpdate({ title: story.title }, story, {
+        upsert: true,
+        new: true,
+      });
+    }
 
     console.log(`Scraped ${stories.length} stories!`);
     return stories;
