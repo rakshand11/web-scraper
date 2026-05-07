@@ -1,12 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import { authRouter } from "./routes/auth.routes.js";
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const connectToDb = async (req, res) => {
+const connectToDb = async () => {
   try {
     const mongoUrl = process.env.MONGO_URI;
     await mongoose.connect(mongoUrl);
@@ -17,6 +18,7 @@ const connectToDb = async (req, res) => {
 };
 connectToDb();
 app.use(express.json());
+app.use("/api/auth", authRouter);
 app.listen(PORT, () => {
   console.log(`server is connected to port ${PORT}`);
 });
