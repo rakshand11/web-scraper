@@ -13,7 +13,8 @@ const PORT = process.env.PORT || 3000;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://your-frontend.vercel.app",
+  "https://web-scraper-4m8f.onrender.com",
+  "https://web-scraper-six-iota.vercel.app",
 ];
 
 app.use(
