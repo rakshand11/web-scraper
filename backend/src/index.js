@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { authRouter } from "./routes/auth.routes.js";
 import scrapeHackerNews from "./scraper/hacker.news.js";
+import { storyRouter } from "./routes/story.routes.js";
+import { scraperRouter } from "./routes/scraper.routes.js";
 dotenv.config();
 
 const app = express();
@@ -21,6 +23,8 @@ const connectToDb = async () => {
 connectToDb();
 app.use(express.json());
 app.use("/api/auth", authRouter);
+app.use("/api/stories", storyRouter);
+app.use("/api/scrape", scraperRouter);
 app.listen(PORT, () => {
   console.log(`server is connected to port ${PORT}`);
 });
