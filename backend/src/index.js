@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { authRouter } from "./routes/auth.routes.js";
+import scrapeHackerNews from "./scraper/hacker.news.js";
 dotenv.config();
 
 const app = express();
@@ -12,6 +13,7 @@ const connectToDb = async () => {
     const mongoUrl = process.env.MONGO_URI;
     await mongoose.connect(mongoUrl);
     console.log("server is connected to database successfully");
+    await scrapeHackerNews();
   } catch (error) {
     console.log("server is not connected to database", error);
   }
